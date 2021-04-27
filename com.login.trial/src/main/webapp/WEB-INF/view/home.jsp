@@ -16,9 +16,15 @@
   <body>
   
     <h1  class = text-center><strong>Customer Details</strong></h1>
-    <p class = "text-right">Welcome Dear <security:authentication property="principal.username"/>
+    <p class = "text-right">Welcome Dear <security:authentication property="principal.username"/><br>
+    <security:authentication property="principal.authorities"/>
    
     </p>
+    
+<form:form action = "http://localhost:8080/com.login.trial/logout" method ="post">
+<input type=submit value="logout" class="btn btn-primary"/>
+</form:form>
+
     <hr>
  <div class = "container">  
  <table class="table">
@@ -27,7 +33,7 @@
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Email</th>
-      <security:authorize access="hasRole('admin')">
+      <security:authorize access="hasAnyRole('ROLE_ADMIN')">
       <th scope="col">Action</th>
       </security:authorize>
     </tr>
@@ -46,7 +52,7 @@
      <td>${customer.first_name}</td>
      <td>${customer.last_name}</td>
      <td>${customer.email}</td>
-     <security:authorize access="hasRole('admin')">
+     <security:authorize access="hasAnyRole('ROLE_ADMIN')">
      <td><a href = "${updateLink}">Update</a> | 
          <a href = "${DeleteLink}" onclick="if(!(confirm('Are you sure Do you want to delete this customer'))) return false">Delete</a></td>
     </security:authorize>
@@ -62,9 +68,7 @@ Add Customer</button>
 
 
 </div>
-<form:form action = "http://localhost:8080/com.login.trial/logout" method ="post">
-<input type=submit value="logout" class="btn btn-primary"/>
-</form:form>
+
 
 
 
